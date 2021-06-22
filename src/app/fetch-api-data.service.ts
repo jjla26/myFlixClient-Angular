@@ -32,25 +32,27 @@ export class UserRegistrationService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //User login endpoint
 export class UserLoginService {
 
   constructor(private http: HttpClient) { }
 
-  public UserLogin(userDetails: any): Observable<any>{
+  public userLogin(userDetails: any): Observable<any>{
     return this.http.post(apiUrl + 'login', userDetails).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
+    let errorMessage
     if(error.error instanceof ErrorEvent){
-      console.error('Some error ocurred:', error.error.message);
+      errorMessage = `Some error ocurred:' ${error.error.message}`
     }else{
-      console.error(        
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`
-      );
+      errorMessage = error.error.message
+      console.error(`Error Status code ${error.status}, ` + `Error body is: ${error.error.message}`)
     }
-    return throwError('Something bad happened, please try again later')
+    return throwError(errorMessage)
   }
 }
 
