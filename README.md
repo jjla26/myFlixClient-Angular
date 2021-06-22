@@ -1,5 +1,18 @@
 # MyFlixAngularClient
 
+Angular client-side application called myFlix based on its existing server-side code (REST API and database)
+
+## Key features 
+
+1. The app should display a welcome view where users will be able to either log in or register an account.
+2. Once authenticated, the user should now view all movies.
+3. Upon clicking on a particular movie, users will be taken to a single movie view, where
+additional movie details will be displayed. The single movie view will contain the following additional features:
+- A button that when clicked takes a user to the ​director view,​ where details about the director of that particular movie will be displayed.
+- A button that when clicked takes a user to the ​genre view,​ where details about that particular genre of the movie will be displayed.
+
+## Angular version
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.4.
 
 ## Development server
