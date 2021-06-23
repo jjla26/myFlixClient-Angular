@@ -7,6 +7,14 @@ import { map } from 'rxjs/operators'
 
 //Declaring the api url that will provide data for the client app
 const apiUrl = 'https://moviesapi-node.herokuapp.com/'
+const authToken = localStorage.getItem('token')
+const user = localStorage.getItem('user')
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${authToken}`
+  })
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -56,13 +64,16 @@ export class UserLoginService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 // Get all the movies end-point
 export class GetMoviesService {
 
   constructor(private http: HttpClient) { }
   
   public getMovies(): Observable<any>{
-    return this.http.get(apiUrl + 'movies').pipe(catchError(this.handleError))
+    return this.http.get(apiUrl + 'movies', httpOptions).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
@@ -78,6 +89,9 @@ export class GetMoviesService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //Get movie by title service
 export class GetMovieService {
 
@@ -100,6 +114,9 @@ export class GetMovieService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //Get director end-point
 export class GetDirectorService {
 
@@ -122,6 +139,9 @@ export class GetDirectorService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //Get genre end-point
 export class GetGenreService {
 
@@ -143,6 +163,9 @@ export class GetGenreService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //Get user end-point
 export class GetUserService {
 
@@ -165,6 +188,9 @@ export class GetUserService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 // Add a movie to favourite Movies end-point
 export class AddFavoriteService {
 
@@ -187,6 +213,9 @@ export class AddFavoriteService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //Delete movie from favorites end-point
 export class DeleteFavoriteService {
 
@@ -209,6 +238,9 @@ export class DeleteFavoriteService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //Edit user end-point
 export class EditUserService {
 
@@ -231,6 +263,9 @@ export class EditUserService {
   }
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 //Delete user end-point
 export class DeleteUserService {
 
