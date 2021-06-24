@@ -1,0 +1,93 @@
+<div class="profile-view">
+  <app-toolbar></app-toolbar>
+  <div class="profile-content">
+    <mat-card class="profile-card">
+      <mat-card-title>
+        My Profile
+      </mat-card-title>
+      <mat-card-content class="card-content" *ngIf="!update">
+        <p><strong>Username:</strong> {{ user?.Username }}</p>
+        <p><strong>Email:</strong> {{ user?.Email }}</p>
+        <p><strong>Brithday: </strong>{{ user?.Birthday | date }}</p>
+      </mat-card-content>
+      <mat-card-actions *ngIf="!update">
+        <button
+        mat-raised-button
+        color="primary"
+        (click)="toggleUpdate()"
+      >
+        {{ "update" | uppercase }}
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="deleteAcc()"
+      >
+        {{ "delete" | uppercase }}
+      </button>
+      </mat-card-actions>
+      <mat-card-content class="card-content" *ngIf="update">
+        <form>
+          <mat-form-field>
+            <input
+              matInput
+              [(ngModel)]="tempUser.Username"
+              placeholder="Username"
+              type="text"
+              name="Username"
+              required
+            >
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input
+              matInput
+              [(ngModel)]="tempUser.Password"
+              type = "password"
+              placeholder="Password"
+              name="Password"
+              required
+            >
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input
+              matInput
+              [(ngModel)]="tempUser.Email"
+              type = "email"
+              placeholder="Email"
+              name="Email"
+              required
+            >
+          </mat-form-field>
+          <br>
+          <mat-form-field>
+            <input
+              matInput
+              [(ngModel)]="tempUser.Birthday"
+              type = "date"
+              placeholder="Birthday"  
+              name="Birthday"
+            >
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+      <mat-card-actions *ngIf="update">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="updateAcc()"
+        >
+          {{ "update" | uppercase }}
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="toggleUpdate()"
+        >
+          {{ "cancel" | uppercase }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

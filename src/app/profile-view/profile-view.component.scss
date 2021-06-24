@@ -1,0 +1,40 @@
+.profile-view {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 400px;
+  margin: 30px;
+  padding: 30px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-content {
+  padding: 10px;
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  margin-left: 20px;
+  margin-right: 20px
+}
+
+@media screen and (max-width: 600px) {
+  .profile-card {
+    width: 80%;
+  }
+
+}
