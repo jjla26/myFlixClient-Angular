@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/internal/operators'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http'
 import { Observable, throwError } from 'rxjs'
-import { map } from 'rxjs/operators'
-
 
 //Declaring the api url that will provide data for the client app
 const apiUrl = 'https://moviesapi-node.herokuapp.com/'
-const authToken = localStorage.getItem('token')
-const user = localStorage.getItem('user')
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${authToken}`
-  })
+const getHeaders = () => {
+  const authToken = localStorage.getItem('token')
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    })
+  }
+  return httpOptions
 }
 @Injectable({
   providedIn: 'root'
@@ -73,19 +73,18 @@ export class GetMoviesService {
   constructor(private http: HttpClient) { }
   
   public getMovies(): Observable<any>{
-    return this.http.get(apiUrl + 'movies', httpOptions).pipe(catchError(this.handleError))
+    return this.http.get(apiUrl + 'movies', getHeaders()).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
+    let errorMessage
     if(error.error instanceof ErrorEvent){
-      console.error('Some error ocurred:', error.error.message);
+      errorMessage = `Some error ocurred:' ${error.error.message}`
     }else{
-      console.error(        
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`
-      );
+      errorMessage = error.error.message
+      console.error(`Error Status code ${error.status}, ` + `Error body is: ${error.error.message}`)
     }
-    return throwError('Something bad happened, please try again later')
+    return throwError(errorMessage)
   }
 }
 
@@ -172,7 +171,7 @@ export class GetUserService {
   constructor(private http: HttpClient) { }
 
   public getUser(name: string): Observable<any>{
-    return this.http.get(apiUrl + `users/${name}`).pipe(catchError(this.handleError))
+    return this.http.get(apiUrl + `users/${name}`, getHeaders() ).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
@@ -197,7 +196,7 @@ export class AddFavoriteService {
   constructor(private http: HttpClient) { }
 
   public addToFavorite(details: any): Observable<any>{
-    return this.http.post(apiUrl + `movies/${details.user}/favorites/${details.movie}`, details).pipe(catchError(this.handleError))
+    return this.http.post(apiUrl + `users/${details.user}/favorites/${details.movie}`, {},getHeaders()).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
@@ -222,7 +221,7 @@ export class DeleteFavoriteService {
   constructor(private http: HttpClient) { }
 
   public deleteFavorite(details: any): Observable<any>{
-    return this.http.delete(apiUrl + `movies/${details.user}/favorites/${details.movie}`).pipe(catchError(this.handleError))
+    return this.http.delete(apiUrl + `users/${details.user}/favorites/${details.movie}`, getHeaders()).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
@@ -247,19 +246,18 @@ export class EditUserService {
   constructor(private http: HttpClient) { }
 
   public editUser(userDetails: any): Observable<any>{
-    return this.http.put(apiUrl + `users/${userDetails.id}`, userDetails).pipe(catchError(this.handleError))
+    return this.http.put(apiUrl + `users/${userDetails.name}`, userDetails, getHeaders()).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
+    let errorMessage
     if(error.error instanceof ErrorEvent){
-      console.error('Some error ocurred:', error.error.message);
+      errorMessage = `Some error ocurred:' ${error.error.message}`
     }else{
-      console.error(        
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`
-      );
+      errorMessage = error.error.message
+      console.error(`Error Status code ${error.status}, ` + `Error body is: ${error.error.message}`)
     }
-    return throwError('Something bad happened, please try again later')
+    return throwError(errorMessage)
   }
 }
 
@@ -272,19 +270,18 @@ export class DeleteUserService {
   constructor(private http: HttpClient) { }
 
   public deleteUser(userId: string): Observable<any>{
-    return this.http.delete(apiUrl + `users/${userId}`).pipe(catchError(this.handleError))
+    return this.http.delete(apiUrl + `users/${userId}`, getHeaders()).pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse): any {
+    let errorMessage
     if(error.error instanceof ErrorEvent){
-      console.error('Some error ocurred:', error.error.message);
+      errorMessage = `Some error ocurred:' ${error.error.message}`
     }else{
-      console.error(        
-        `Error Status code ${error.status}, ` +
-        `Error body is: ${error.error}`
-      );
+      errorMessage = error.error.message
+      console.error(`Error Status code ${error.status}, ` + `Error body is: ${error.error.message}`)
     }
-    return throwError('Something bad happened, please try again later')
+    return throwError(errorMessage)
   }
 }
 
