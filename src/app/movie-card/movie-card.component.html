@@ -1,6 +1,7 @@
-<mat-card *ngFor="let movie of movies; let i=index;">
-  <mat-dialog-content>
-    <mat-card-title>{{ movie.Title }}</mat-card-title>
-    <mat-card-subtitle><img src={{movie.ImagePath}}/></mat-card-subtitle>
-  </mat-dialog-content>
-</mat-card>
+<div class="movie-view">
+  <div>
+    <app-toolbar [user]="user.Username"></app-toolbar>
+  </div>
+  <h1>Movies</h1>
+  <app-movie-list class="movie-content" [movies]="movies" [user]="user" [deleteFromFavorites]="deleteFromFavorites"></app-movie-list>
+</div>
