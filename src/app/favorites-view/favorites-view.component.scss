@@ -1,0 +1,18 @@
+.favorite-view {
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+  height: 100vh;
+}
+
+h1 {
+  margin: 20px
+}
+
+.favorite-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
