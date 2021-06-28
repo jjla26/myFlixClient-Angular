@@ -15,6 +15,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './user-login-form.component.html',
   styleUrls: ['./user-login-form.component.scss']
 })
+
+/**
+ * User login form component to render the login form
+ */
 export class UserLoginFormComponent implements OnInit {
 
   @Input() userData = { Username: '', Password: '' };
@@ -28,7 +32,9 @@ export class UserLoginFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // This is the function responsible for sending the form inputs to the backend
+  /** 
+   * This is the function responsible for sending the form inputs to the backend 
+   */
   login(): void {
     this.fetchApiData.userLogin(this.userData).subscribe((result) => {
       localStorage.setItem('user', result.data.Username)
@@ -44,5 +50,4 @@ export class UserLoginFormComponent implements OnInit {
       });
     });
   }
-
 }

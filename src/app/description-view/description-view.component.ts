@@ -6,6 +6,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog'
   templateUrl: './description-view.component.html',
   styleUrls: ['./description-view.component.scss']
 })
+
+/**
+ * Description class component to show the description of a movie
+ */
 export class DescriptionViewComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { description: string}) { }

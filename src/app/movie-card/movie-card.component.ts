@@ -8,6 +8,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.scss']
 })
+
+/**
+ * Movie card component to show the movie cards
+ */
 export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   user: any = {};
@@ -21,6 +25,9 @@ export class MovieCardComponent implements OnInit {
     this.getMovies()
   }
 
+  /**
+   * Function to get all the movies and render them
+   */
   getMovies(): void{
     this.fetchApiData.getMovies().subscribe((resp: any) => {
       const name = localStorage.getItem('user')
@@ -31,7 +38,10 @@ export class MovieCardComponent implements OnInit {
       return this.movies
     })
   }
-
+  /**
+   * Function to delete a movie from favorites
+   * @param id movie id
+   */
   deleteFromFavorites(id: string): void{
     this.fetchApiData.deleteFavorite({ user: this.user.Username, movie: id}).subscribe(result => {
       this.user = result.data

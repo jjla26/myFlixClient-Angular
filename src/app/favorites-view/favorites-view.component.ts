@@ -7,6 +7,10 @@ import { FetchApiDataService } from '../fetch-api-data.service'
   templateUrl: './favorites-view.component.html',
   styleUrls: ['./favorites-view.component.scss']
 })
+
+/**
+ * Favorites view to show the favorites movies
+ */
 export class FavoritesViewComponent implements OnInit {
   user: any = {};
   movies: any[] = [];
@@ -19,6 +23,9 @@ export class FavoritesViewComponent implements OnInit {
     this.getFavorites()
   } 
 
+  /**
+   * Function to get the favorites movies of a user
+   */
   getFavorites(): void {
     this.user.name = localStorage.getItem('user') ? localStorage.getItem('user') : ''
     this.fetchApiData.getUser(this.user.name).subscribe(user => {
@@ -33,6 +40,10 @@ export class FavoritesViewComponent implements OnInit {
     })
   } 
 
+  /**
+   * Function to delete a movie from favorites
+   * @param id movie ID
+   */
   deleteFromFavorites(id: string): void{
     this.fetchApiData.deleteFavorite({ user: this.user.Username, movie: id}).subscribe(result => {
       console.log(this.movies, this.user)
