@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GetMoviesService, GetUserService, AddFavoriteService, DeleteFavoriteService } from '../fetch-api-data.service'
+import { FetchApiDataService } from '../fetch-api-data.service'
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -13,10 +13,7 @@ export class MovieCardComponent implements OnInit {
   user: any = {};
 
   constructor(
-    public fetchMovies: GetMoviesService,
-    public fetchUser: GetUserService,
-    public addFavorite: AddFavoriteService,
-    public deleteFavorite: DeleteFavoriteService,
+    public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar) { }
 
@@ -25,9 +22,9 @@ export class MovieCardComponent implements OnInit {
   }
 
   getMovies(): void{
-    this.fetchMovies.getMovies().subscribe((resp: any) => {
+    this.fetchApiData.getMovies().subscribe((resp: any) => {
       const name = localStorage.getItem('user')
-      this.fetchUser.getUser(name ? name : '').subscribe(result => {
+      this.fetchApiData.getUser(name ? name : '').subscribe(result => {
         this.user = result.data
       })
       this.movies = resp.data
@@ -36,7 +33,7 @@ export class MovieCardComponent implements OnInit {
   }
 
   deleteFromFavorites(id: string): void{
-    this.deleteFavorite.deleteFavorite({ user: this.user.Username, movie: id}).subscribe(result => {
+    this.fetchApiData.deleteFavorite({ user: this.user.Username, movie: id}).subscribe(result => {
       this.user = result.data
       this.snackBar.open(result.message, 'OK', {
         duration: 2000

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { GetUserService, DeleteUserService, EditUserService } from '../fetch-api-data.service'
+import { FetchApiDataService } from '../fetch-api-data.service'
 
 @Component({
   selector: 'app-profile-view',
@@ -15,23 +15,21 @@ export class ProfileViewComponent implements OnInit {
   update: boolean = false
 
   constructor(
-    public fetchUser: GetUserService,
-    public deleteUser: DeleteUserService,
-    public updateUser: EditUserService,
+    public fetchApiData: FetchApiDataService,
     public router: Router,
     public snackBar: MatSnackBar,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.user.name = localStorage.getItem('user') ? localStorage.getItem('user') : ''
-    this.fetchUser.getUser(this.user.name).subscribe(user => {
+    this.fetchApiData.getUser(this.user.name).subscribe(user => {
       this.user = user.data
       this.tempUser = { ...user.data}
     })
   }
 
   updateAcc(): void {
-    this.updateUser.editUser({...this.tempUser, name: this.user.Username}).subscribe(result => {
+    this.fetchApiData.editUser({...this.tempUser, name: this.user.Username}).subscribe(result => {
       localStorage.setItem('user', result.data.Username)
       this.user = result.data
       this.update = false
@@ -48,7 +46,7 @@ export class ProfileViewComponent implements OnInit {
 
   deleteAcc(): void {
     if(confirm('Are you sure you want to delete your account?')){
-      this.deleteUser.deleteUser(this.user.Username).subscribe(result => {
+      this.fetchApiData.deleteUser(this.user.Username).subscribe(result => {
         localStorage.clear()
         this.router.navigate(['welcome'])
         this.snackBar.open(result.message, 'OK', {

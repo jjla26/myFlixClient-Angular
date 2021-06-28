@@ -4,7 +4,7 @@ import { GenreViewComponent } from '../genre-view/genre-view.component'
 import { DirectorViewComponent } from '../director-view/director-view.component'
 import { DescriptionViewComponent } from '../description-view/description-view.component'
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AddFavoriteService, DeleteFavoriteService } from '../fetch-api-data.service';
+import { FetchApiDataService } from '../fetch-api-data.service';
 
 @Component({
   selector: 'app-movie-list',
@@ -17,8 +17,7 @@ export class MovieListComponent implements OnInit {
   @Input() deleteFromFavorites: any
 
   constructor(
-    public addFavorite: AddFavoriteService,
-    public deleteFavorite: DeleteFavoriteService,
+    public fetchApiData: FetchApiDataService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,) { }
 
@@ -58,7 +57,7 @@ export class MovieListComponent implements OnInit {
   }
 
   addToFavorites(id: string): void {
-    this.addFavorite.addToFavorite({ user: this.user.Username, movie: id}).subscribe(result => {
+    this.fetchApiData.addToFavorite({ user: this.user.Username, movie: id}).subscribe(result => {
       this.user = result.data
       this.snackBar.open(result.message, 'OK', {
         duration: 2000
@@ -70,20 +69,6 @@ export class MovieListComponent implements OnInit {
     })
     
   }
-
-  // deleteFromFavorites(id: string): void{
-  //   this.deleteFavorite.deleteFavorite({ user: this.user.Username, movie: id}).subscribe(result => {
-  //     this.user = result.data
-  //     this.movies = this.movies.filter(movie => result.data.FavoriteMovies.includes(movie._id))
-  //     this.snackBar.open(result.message, 'OK', {
-  //       duration: 2000
-  //     })
-  //   }, error => {
-  //     this.snackBar.open(error.message, 'OK', {
-  //       duration: 2000
-  //     })
-  //   })
-  // }
 
   isFavorite(id: string): boolean {
     if(this.user.FavoriteMovies){
