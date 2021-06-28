@@ -6,6 +6,10 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
   templateUrl: './director-view.component.html',
   styleUrls: ['./director-view.component.scss']
 })
+
+/**
+ * Director view to show the director of a movie
+ */
 export class DirectorViewComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {name: string, bio: string} ) { }
